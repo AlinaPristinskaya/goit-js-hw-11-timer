@@ -28,4 +28,30 @@
 
 .timer {
   display: flex;
+  align-items: center;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 2px;
+  background-color: grey;
+  height: 230px;
+  width: 300px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 2.14;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.value {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 72px;
+  line-height: 2.14;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
