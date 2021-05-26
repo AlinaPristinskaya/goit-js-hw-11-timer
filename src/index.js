@@ -1,48 +1,76 @@
 import './sass/main.scss';
 
-const refs = {
-  days: document.querySelector(`[data-value="days"]`),
-  hours: document.querySelector(`[data-value="hours"]`),
-  mins: document.querySelector(`[data-value="mins"]`),
-  secs: document.querySelector(`[data-value="secs"]`),
-};
+
 
 class CountdownTimer {
-  constructor({ onTick, selector, targetDate }) {
-    this.onTick = onTick;
+  constructor({ selector, targetDate }) {   
     this.selector = selector;
-    this.targetDate = targetDate;
-  }
-  start() {
+    this.targetDate = targetDate;       
+    this.start();
+    
+    this.elements=this.getElement(selector);
+    
+     }
+  
+  
+start() {
     setInterval(() => {
       const currentTime = Date.now();
       const deltaTimes = this.targetDate - currentTime;
-      const { days, hours, mins, secs } = this.getTimeComponents(deltaTimes);
-      console.log(`${days}:${hours}:${mins}:${secs}`);
-      this.onTick({ days, hours, mins, secs });
+      const clock = this.getTimeComponents(deltaTimes);
+      console.log(clock);
+      this.updateClockface(clock);
+      
     }, 1000);
   }
-  pad(value) {
+ 
+    
+pad(value) {
     return String(value).padStart(2, '0');
   }
-  getTimeComponents(time) {
+getTimeComponents(time) {
     const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
     const hours = this.pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
     const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
     const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-    return { days, hours, mins, secs };
+    return {days, hours, mins, secs};   
+
+  } 
+updateClockface(clock) {
+  
+    
+    this.elements.daysEl.textContent = `${clock.days}`;
+    this.elements.hoursEl.textContent = `${clock.hours}`;
+    this.elements.minsEl.textContent = `${clock.mins}`;
+    this.elements.secsEl.textContent = `${clock.secs}`;
+    console.log(this.elements.daysEl.textContent);
+    
+    
+  };
+  getElement(selector){ 
+    
+    const refs={    
+    daysEl: document.querySelector(`${this.selector} [data-value="days"]`),
+    hoursEl: document.querySelector(`${this.selector} [data-value="hours"]`),
+    minsEl: document.querySelector(`${this.selector} [data-value="mins"]`),
+    secsEl: document.querySelector(`${this.selector} [data-value="secs"]`), 
+      
+    } 
+    return refs;
   }
+  
 }
-const timer = new CountdownTimer({
+const timer1 = new CountdownTimer({
   selector: '#timer-1',
   targetDate: new Date('Jul 17, 2022'),
-  onTick: updateClockface,
+  
 });
 
-function updateClockface({ days, hours, mins, secs }) {
-  refs.days.textContent = `${days}`;
-  refs.hours.textContent = `${hours}`;
-  refs.mins.textContent = `${mins}`;
-  refs.secs.textContent = `${secs}`;
-}
-timer.start();
+const timer2 = new CountdownTimer({
+  selector: '#timer-2',
+  targetDate: new Date('Jul 17, 2023'),
+  
+});
+
+
+
